@@ -1,0 +1,51 @@
+out = "src/sample/Base.java";
+package = "sample";
+class = "Base";
+:	public static void main(String[] args) throws Exception {
+:		new Base(System.in).main();
+:	}
+
+<> S
+	( [ \t\r\n]
+	/ "//" ( !"\n" . )*
+	) [ \t\r\n]* ~S?
+
+<void> main
+: int value;
+	( value = sum ";" : System.out.println(value);
+	)* ~S? ";"
+
+<int> sum
+: int lhs, rhs;
+	lhs = term
+	( ~S
+	/ "+" rhs = term : lhs += rhs;
+	/ "-" rhs = term : lhs -= rhs;
+	)*
+: return lhs;
+
+<int> term
+: int lhs, rhs;
+	lhs=unary
+	( ~S
+	/ "*" rhs = unary : lhs *= rhs;
+	/ "/" rhs = unary : lhs /= rhs;
+	)*
+: return lhs;
+
+<int> unary
+: int value;
+	~S?
+	( "-" ~S? value = element
+	/ value = element
+	)
+: return value;
+
+<int> element
+: String image;
+	image = < [0-9]+ >
+: return Integer.parseInt(image);
+/
+: int value;
+	"(" value = sum ")"
+: return value;

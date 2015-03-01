@@ -1,0 +1,166 @@
+out = "src/parser/Generator_NEW.java";
+package = "parser";
+class = "Generator_NEW" "GeneratorHelper";
+:	public static void main(String[] args) throws Exception {
+:		new Generator_NEW(choose_file(".")).main();
+:	}
+
+<> S
+	( [ \t\r\n]
+	/ "//" ( !"\n" . )*
+	) [ \t\r\n]* ~S?
+
+<String> ID
+: String image;
+	image = < [$A-Za-z_] [$0-9A-Za-z_]* >
+: return image;
+
+<String> PARAM
+: String image;
+	image = < "(" ( ~PARAM / !")" . )* ")" >
+: return image;
+
+<int> STRING
+: int length = 0;
+	"\""
+	( "\\"
+		( "u"+ ....
+		/ [0-3]? [0-7] [0-7]?
+		/ .
+		) : ++length;
+	/ !"\"" . : ++length;
+	)* "\""
+: return length;
+
+<String> CHAR
+: String image;
+	image = < "[" ( "\\" ( "\\[" / "\\]" / . ) / ~CHAR / !"]" . )* "]" >
+: return image;
+
+<void> elem
+	~S
+/
+: String value = "", id, param = "()";
+: String[] pos;
+	id = ID
+	( ~S? "=" ~S? : pos = symbol.image();
+		"<" elem* ">" : symbol.image(id, pos);
+	/
+		( : value = id + " = ";
+			~S? "=" ~S? id = ID
+		)? param = PARAM? ~S?
+		( "?" : symbol.id_option(value, id, param);
+		/ "*" : symbol.id_more(value, id, param);
+		/ "+"
+			: symbol.id(value, id, param);
+			: symbol.id_more(value, id, param);
+		/ : symbol.id(value, id, param);
+		)
+	)
+/
+: String id;
+	"~" ~S? id = ID ~S?
+	( "?" : symbol.pred_option(id + "$()", '~' + id);
+	/ "*" : symbol.pred_more(id + "$()", '~' + id);
+	/ "+"
+		: symbol.pred(id + "$()", id + "$()", '~' + id);
+		: symbol.pred_more(id + "$()", '~' + id);
+	/ : symbol.pred(id + "$()", id + "$()", '~' + id);
+	)
+/
+	"." ~S?
+	( "?" : symbol.pred_option("$any()", ".");
+	/ "*" : symbol.pred_more("$any()", ".");
+	/ "+"
+		: symbol.pred("$any()", "++$pos", ".");
+		: symbol.pred_more("$any()", ".");
+	/ : symbol.pred("$any()", "++$pos", ".");
+	)
+/
+: String image;
+: int length;
+	image = < length = STRING > ~S?
+	( "?" : symbol.pred_option("$string(" + image + ')', image);
+	/ "*" : symbol.pred_more("$string(" + image + ')', image);
+	/ "+"
+		: symbol.pred("$string(" + image + ')', "$pos += " + length, image);
+		: symbol.pred_more("$string(" + image + ')', image);
+	/ : symbol.pred("$string(" + image + ')', "$pos += " + length, image);
+	)
+/
+: String image;
+	image = CHAR ~S?
+	( "?" : symbol.pred_option(pred_char(image), image);
+	/ "*" : symbol.pred_more(pred_char(image), image);
+	/ "+"
+		: symbol.pred(pred_char(image), "++$pos", image);
+		: symbol.pred_more(pred_char(image), image);
+	/ : symbol.pred(pred_char(image), "++$pos", image);
+	)
+/
+: String image;
+	"&" ~S?
+	( image = ID : symbol.pred_and(image + "$()", image);
+	/ "." : symbol.pred_and("$any()", ".");
+	/ image = < ~STRING > : symbol.pred_and("$string(" + image + ')', image);
+	/ image = CHAR : symbol.pred_and(pred_char(image), image);
+	/ : symbol.par();
+		"(" par ")" : symbol.par_and();
+	)
+/
+: String image;
+	"!" ~S?
+	( image = ID : symbol.pred_not(image + "$()", image);
+	/ "." : symbol.pred_not("$any()", ".");
+	/ image = < ~STRING > : symbol.pred_not("$string(" + image + ')', image);
+	/ image = CHAR : symbol.pred_not(pred_char(image), image);
+	/ : symbol.par();
+		"(" par ")" : symbol.par_not();
+	)
+/
+: symbol.par();
+	"(" par ")" ~S?
+	( "?" : symbol.par_option();
+	/ "*" : symbol.par_more();
+	/ "+" : symbol.par_plus();
+	/ : symbol.par_end();
+	)
+/
+: String code;
+	":" ( " " / "\t" )? code = < ( !"\n" . )* > : symbol.code(code);
+
+<void> par
+	( elem
+	/ "/" : symbol.choice();
+	)*
+
+<> Type
+	~TypeArguments
+	( ~S? "." ~S? ~TypeArguments )*
+	( ~S? "[" ~S? "]" )*
+
+<> TypeArguments
+	~ID ( ~S? "<" ~TypeArgument ( "," ~TypeArgument )* ">" )?
+
+<> TypeArgument
+	~S?
+	( "?" ( ~S? ( "extends" / "super" ) ~S ~Type )?
+	/ ~Type
+	) ~S?
+
+<void> main
+: String command, arg, code;
+	( ~S
+	/ command = ID ~S? "="
+		( ~S
+		/ "\"" arg = < ( !"\"" . )* > "\"" : arg_string(arg);
+		/ arg = < "-"? [0-9]+ > : arg_int(arg);
+		)* ";" : call(command);
+	/ ":" ( " " / "\t" )? code = < ( !"\n" . )* > : code(code);
+	)*
+: String type, id, param;
+	( "<" ~S? type = < ~Type? > ~S? ">" ~S? id = ID : param = "()";
+		param = PARAM? : symbol = new Symbol(type, id, param);
+		par : symbol.main();
+	)* !.
+: end();
