@@ -62,3 +62,19 @@
   * / ( '__`&`__' / '__`!`__' ) '__`(`__' _Element_\* ( '__`/`__' _Element_\* )\* '__`)`__'
  * _Comment_ ::=
   * '__`//`__' _ALineOfComment_
+
+## Header commands
+ * __out__ = "*output_file_name*" ;
+  * Redirect result output to a file.
+ * __package__ = "*package_name*" ;
+  * Set package of output grammar.
+ * __import__ = "*import_directive*" ;
+  * Create import declaration.
+ * __class__ = "*class_name*" ;
+  * Set class name of output grammar.
+ * __class__ = "*class_name*" "*superclass_name*" ;
+  * Set class name and superclass of output grammar.
+  * The superclass should be a subclass of [Parser class](https://github.com/TanumaHideki/JavaPEG/blob/master/JavaPEG/src/parser/Parser.java) and may be a helper class or a base grammar.
+ * __class__ = "*class_name*" "*super_class_name*" "*interfaces*" ;
+  * Set class name, superclass and interfaces of output grammar.
+  * If no need for superclass, then can be omitted as empty string "".
