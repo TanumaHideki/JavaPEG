@@ -17,21 +17,23 @@
  * Grouping
   * __( _elements_ )__ - sequence
   * __( _elements_ / _elements_ ... )__ - ordered choice
- * Postfix modifier
+ * Postfix modifiers
   * ___element_ ?__ - optional
   * __( _group_ )?__ - optional for group
   * ___element_ \*__ - zero or more
   * __( _group_ )\*__ - zero or more for group
   * ___element_ +__ - one or more
   * __( _group_ )+__ - one or more for group
- * Prefix modifier
+ * Prefix modifiers
   * __& _element___ - and predicate
   * __& ( _group_ )__ - and predicate for group
   * __! _element___ - not predicate
   * __! ( _group_ )__ - not predicate for group
  * Action elements
   * ___image_ = < _elements_ >__ - retrieve image string
-  * __: _JavaCode___ - embedded action code
+  * __: *java_code*__ - embedded action code
+ * Comment
+  * __// *comment*__ - comment
 
 ## Grammar structure
  * _Grammar_ ::=
@@ -58,3 +60,5 @@
   * / ( '__`&`__' / '__`!`__' ) '__`[`__' _Pattern_ '__`]`__'
   * / ( '__`&`__' / '__`!`__' ) '__`.`__'
   * / ( '__`&`__' / '__`!`__' ) '__`(`__' _Element_\* ( '__`/`__' _Element_\* )\* '__`)`__'
+ * _Comment_ ::=
+  * '__`//`__' _ALineOfComment_
