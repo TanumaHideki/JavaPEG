@@ -5,22 +5,22 @@ class = "Generator_NEW" "GeneratorHelper";
 :		new Generator_NEW(choose_file(".")).main();
 :	}
 
-<> S
+<> S // Spacing or comment, not empty
 	( [ \t\r\n]
 	/ "//" ( !"\n" . )*
 	) [ \t\r\n]* ~S?
 
-<String> ID
+<String> ID // Symbol identifier
 : String image;
 	image = < [$A-Za-z_] [$0-9A-Za-z_]* >
 : return image;
 
-<String> PARAM
+<String> PARAM // Parameter
 : String image;
 	image = < "(" ( ~PARAM / !")" . )* ")" >
 : return image;
 
-<int> STRING
+<int> STRING // String literal, returns length
 : int length = 0;
 	"\""
 	( "\\"
@@ -32,12 +32,12 @@ class = "Generator_NEW" "GeneratorHelper";
 	)* "\""
 : return length;
 
-<String> CHAR
+<String> CHAR // Character class literal, same as Java regular expression
 : String image;
 	image = < "[" ( "\\" ( "\\[" / "\\]" / . ) / ~CHAR / !"]" . )* "]" >
 : return image;
 
-<void> elem
+<void> elem // Grammar elements with modifiers
 	~S
 /
 : String value = "", id, param = "()";
@@ -129,12 +129,12 @@ class = "Generator_NEW" "GeneratorHelper";
 : String code;
 	":" ( " " / "\t" )? code = < ( !"\n" . )* > : symbol.code(code);
 
-<void> par
+<void> par // Elements and orderd choices inside parentheses or symbol definition
 	( elem
 	/ "/" : symbol.choice();
 	)*
 
-<> Type
+<> Type // Java type expression
 	~TypeArguments
 	( ~S? "." ~S? ~TypeArguments )*
 	( ~S? "[" ~S? "]" )*
@@ -148,7 +148,7 @@ class = "Generator_NEW" "GeneratorHelper";
 	/ ~Type
 	) ~S?
 
-<void> main
+<void> main // Main symbol consists of header and symbol definitions
 : String command, arg, code;
 	( ~S
 	/ command = ID ~S? "="
