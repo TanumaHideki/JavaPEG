@@ -129,7 +129,7 @@ class = "Generator_NEW" "GeneratorHelper";
 : String code;
 	":" ( " " / "\t" )? code = < ( !"\n" . )* > : symbol.code(code);
 
-<void> par // Elements and orderd choices inside parentheses or symbol definition
+<void> par // Elements and ordered choices inside parentheses or symbol definition
 	( elem
 	/ "/" : symbol.choice();
 	)*
