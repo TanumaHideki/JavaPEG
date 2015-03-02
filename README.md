@@ -37,4 +37,4 @@ PEG scannerless parser generator for Java 8
  * Choosing grammar file starts the generation.
  * In Eclipse environment, do refresh (F5) and then you can see the created Java file.
  * When generating derived parser, base parser must be created beforehand.
-
+ * Grammar reference is available [__here__](https://github.com/TanumaHideki/JavaPEG/blob/master/Reference.md).
