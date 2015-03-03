@@ -1,4 +1,4 @@
-# Reference
+# JavaPEG Reference
 
 ## Grammar elements
  * Terminal elements
@@ -44,8 +44,11 @@
  * _Code_ ::=
   * '__`:`__' _ALineOfJavaCode_
  * _SymbolDefinition_ ::=
-  * '__`<`__' _Type_? '__`>`__' _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )?
-  * _Element_\* ( '__`/`__' _Element_\* )\*
+  * '__`<`__' _Type_? '__`>`__' _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )?  
+    _note:_ Omitting _Type_ means this symbol has no action inside and output code can be shorten.
+  * _Element_\* ( '__`/`__' _Element_\* )\*  
+    _note1:_ Block elements parted by choice operators (/) have different variable scope and the variable declaration must be put at the start of each block elements.  
+    _note2:_ If the symbol returns a value, a return statement must be put at the end of each block elements.
  * _Element_ ::=
   * ( _VariableName_ '__`=`__' )? _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )? ( '__`?`__' / '__`*`__' / '__`+`__' )?
   * / '__`~`__' _SymbolName_ ( '__`?`__' / '__`*`__' / '__`+`__' )?
@@ -64,6 +67,9 @@
   * '__`//`__' _ALineOfComment_
 
 ## Header commands
+_note:_  
+Actually the header commands are implemented as methods named '$'+_command_ and invoked by Java reflection.
+So, extended generator may implement new header commands likewise.
  * __out__ = "*output_file_name*" ;
   * Redirect result output to a file.
  * __package__ = "*package_name*" ;
@@ -75,6 +81,6 @@
  * __class__ = "*class_name*" "*superclass_name*" ;
   * Set class name and superclass of output grammar.
   * The superclass should be a subclass of [Parser class](https://github.com/TanumaHideki/JavaPEG/blob/master/JavaPEG/src/parser/Parser.java) and may be a helper class or a base grammar.
- * __class__ = "*class_name*" "*super_class_name*" "*interfaces*" ;
+ * __class__ = "*class_name*" "*superclass_name*" "*interfaces*" ;
   * Set class name, superclass and interfaces of output grammar.
   * If no need for superclass, then can be omitted as empty string "".
