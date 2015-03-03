@@ -81,6 +81,6 @@ So, extended generator may implement new header commands likewise.
  * __class__ = "*class_name*" "*superclass_name*" ;
   * Set class name and superclass of output grammar.
   * The superclass should be a subclass of [Parser class](https://github.com/TanumaHideki/JavaPEG/blob/master/JavaPEG/src/parser/Parser.java) and may be a helper class or a base grammar.
- * __class__ = "*class_name*" "*super_class_name*" "*interfaces*" ;
+ * __class__ = "*class_name*" "*superclass_name*" "*interfaces*" ;
   * Set class name, superclass and interfaces of output grammar.
   * If no need for superclass, then can be omitted as empty string "".
