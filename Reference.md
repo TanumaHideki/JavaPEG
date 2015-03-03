@@ -1,4 +1,4 @@
-# Reference
+# JavaPEG Reference
 
 ## Grammar elements
  * Terminal elements
