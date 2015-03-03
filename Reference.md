@@ -44,7 +44,8 @@
  * _Code_ ::=
   * '__`:`__' _ALineOfJavaCode_
  * _SymbolDefinition_ ::=
-  * '__`<`__' _Type_? '__`>`__' _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )?
+  * '__`<`__' _Type_? '__`>`__' _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )?  
+    _note:_ Omitting _Type_ means this symbol has no action inside and output code can be shorten.
   * _Element_\* ( '__`/`__' _Element_\* )\*
  * _Element_ ::=
   * ( _VariableName_ '__`=`__' )? _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )? ( '__`?`__' / '__`*`__' / '__`+`__' )?
@@ -64,6 +65,9 @@
   * '__`//`__' _ALineOfComment_
 
 ## Header commands
+_note:_  
+Actually the header commands are implemented as methods named '$'+_command_ and invoked by Java reflection.
+So, extended generator may implement new header commands likewise.
  * __out__ = "*output_file_name*" ;
   * Redirect result output to a file.
  * __package__ = "*package_name*" ;
