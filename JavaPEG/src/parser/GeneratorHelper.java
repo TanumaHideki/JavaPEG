@@ -1,6 +1,5 @@
 package parser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -9,9 +8,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public abstract class GeneratorHelper extends Parser {
 	String indent = "";
@@ -80,12 +76,6 @@ public abstract class GeneratorHelper extends Parser {
 		Class<?> parser = Class.forName(extend);
 		methods = parser.getMethods();
 		new_id = parser.getMethod("$open", new Class<?>[] { Object.class, int.class }).getAnnotation(SymbolID.class).value() - 1;
-	}
-
-	public static File choose_file(String current) throws FileNotFoundException {
-		JFileChooser chooser = new JFileChooser(current);
-		chooser.setFileFilter(new FileNameExtensionFilter("Grammar Files", "peg"));
-		return (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) ? null : chooser.getSelectedFile();
 	}
 
 	protected void arg_string(String arg) {

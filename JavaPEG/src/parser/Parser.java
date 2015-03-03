@@ -12,10 +12,23 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 public abstract class Parser {
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface SymbolID {
 		int value();
+	}
+
+	public static File $filechooser(String current) throws FileNotFoundException {
+		return $filechooser(current, null, (String[]) null);
+	}
+
+	public static File $filechooser(String current, String description, String... extensions) throws FileNotFoundException {
+		JFileChooser chooser = new JFileChooser(current);
+		if (extensions != null) chooser.setFileFilter(new FileNameExtensionFilter(description, extensions));
+		return (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) ? null : chooser.getSelectedFile();
 	}
 
 	private Reader reader;

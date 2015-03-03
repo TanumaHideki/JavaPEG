@@ -2,7 +2,7 @@ out = "src/parser/Generator_NEW.java";
 package = "parser";
 class = "Generator_NEW" "GeneratorHelper";
 :	public static void main(String[] args) throws Exception {
-:		new Generator_NEW(choose_file(".")).main();
+:		new Generator_NEW($filechooser(".", "Grammar file", "peg")).main();
 :	}
 
 <> S // Spacing or comment, not empty

@@ -4,7 +4,7 @@ public class Generator extends GeneratorHelper {
 	public Generator(Object in) {$open(in, 1);}
 	public Generator() {}
 	public static void main(String[] args) throws Exception {
-		new Generator(choose_file(".")).main();
+		new Generator($filechooser(".", "Grammar file", "peg")).main();
 	}
 	@SymbolID(0)
 	public void S() {
