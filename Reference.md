@@ -1,6 +1,9 @@
 # JavaPEG Reference
 
 ## Grammar elements
+_notes:_  
+Symbol name can include hyphens (`-`) which are replaced by underlines (`_`) in the output code.  
+Symbol name starts with dollar (`$`) means it's start symbol and never called in the grammar. This specification is to reduce the output code and the cache memory for packrat parsing.
  * Terminal elements
   * __"_string_"__ - basic string  
   _e.g._ __`"if" expression "then" statement`__
@@ -47,7 +50,7 @@
   * '__`<`__' _Type_? '__`>`__' _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )?  
     _note:_ Omitting _Type_ means this symbol has no action inside and output code can be shorten.
   * _Element_\* ( '__`/`__' _Element_\* )\*  
-    _note1:_ Block elements parted by choice operators (/) have different variable scope and the variable declaration must be put at the start of each block elements.  
+    _note1:_ Block elements parted by choice operators (/) have different variable scope and the variable declaration must be put at each block elements.  
     _note2:_ If the symbol returns a value, a return statement must be put at the end of each block elements.
  * _Element_ ::=
   * ( _VariableName_ '__`=`__' )? _SymbolName_ ( '__`(`__' _Parameter_ '__`)`__' )? ( '__`?`__' / '__`*`__' / '__`+`__' )?

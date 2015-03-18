@@ -8,7 +8,7 @@ PEG scannerless parser generator for Java 8
 * [Eclipse plugin](https://github.com/TanumaHideki/JavaPEG/blob/master/JavaPEG/JavaPEGPlugin.zip) to coloring grammar is available.
 * Grammar reference is available [__here__](https://github.com/TanumaHideki/JavaPEG/blob/master/Reference.md).
 
-### Requirement:
+### Requirements:
 * Parser generator requires Java 8 to execute.
 * Output parser class may run on Java 7 unless it includes Java 8 features in action code.
 
