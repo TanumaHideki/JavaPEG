@@ -4,13 +4,13 @@ public class Generator extends GeneratorHelper {
 	public Generator(Object in) {$open(in, 1);}
 	public Generator() {}
 	public static void main(String[] args) throws Exception {
-		new Generator($filechooser(".", "Grammar file", "peg")).main();
+		new Generator($filechooser(".", "Grammar file", "peg")).$main();
 	}
 	@SymbolID(0)
-	public void S() {
-		if (!S$()) throw new ParseError();
+	public void __() {
+		if (!__$()) throw new ParseError();
 	}
-	protected boolean S$() {
+	protected boolean __$() {
 		int $p = $cache(0);
 		if ($p > 0) {
 			$pos = $p;
@@ -43,7 +43,7 @@ public class Generator extends GeneratorHelper {
 				}
 			}
 			while ($char($CHAR[0])) ; // [ \t\r\n]*
-			S$(); // ~S?
+			__$(); // ~__?
 			$ok(0, $p);
 			break;
 		} while ($r = $ng(0, $pos = $p));
@@ -53,11 +53,11 @@ public class Generator extends GeneratorHelper {
 	public String ID() {
 		try {
 			String image;
-			int $0 = $lock(1); // =<
-			if (!$char($CHAR[1])) throw new ParseError(); // [$A-Za-z_]
-			while ($char($CHAR[2])) ; // [$0-9A-Za-z_]*
+			int $0 = $lock(1); // = <
+			if (!$char($CHAR[1])) throw new ParseError(); // [A-Za-z_-]
+			while ($char($CHAR[2])) ; // [$0-9A-Za-z_-]*
 			image = $image($0); // >
-			return image;
+			return image.replace('-', '_');
 		} catch (ParseError e) {
 			throw e;
 		} catch (Exception e) {
@@ -74,8 +74,8 @@ public class Generator extends GeneratorHelper {
 		$p = $pos;
 		boolean $r = true;
 		do {
-			if (!$char($CHAR[1])) continue; // [$A-Za-z_]
-			while ($char($CHAR[2])) ; // [$0-9A-Za-z_]*
+			if (!$char($CHAR[1])) continue; // [A-Za-z_-]
+			while ($char($CHAR[2])) ; // [$0-9A-Za-z_-]*
 			$ok(1, $p);
 			break;
 		} while ($r = $ng(1, $pos = $p));
@@ -85,7 +85,7 @@ public class Generator extends GeneratorHelper {
 	public String PARAM() {
 		try {
 			String image;
-			int $0 = $lock(1); // =<
+			int $0 = $lock(1); // = <
 			if (!$string("(")) throw new ParseError(); // "("
 			$1: for (;;) {
 				int $2 = $pos;
@@ -297,7 +297,7 @@ public class Generator extends GeneratorHelper {
 	public String CHAR() {
 		try {
 			String image;
-			int $0 = $lock(1); // =<
+			int $0 = $lock(1); // = <
 			if (!$string("[")) throw new ParseError(); // "["
 			$1: for (;;) {
 				int $2 = $pos;
@@ -424,13 +424,13 @@ public class Generator extends GeneratorHelper {
 		return $r;
 	}
 	@SymbolID(5)
-	public void elem() {
+	public void __elem() {
 		try {
 			int $0 = $pos;
 			do {
-				if (!S$()) continue; // ~S
+				if (!__$()) continue; // ~__
 				$pos = $0;
-				S$(); // ~S
+				__$(); // ~__
 				return;
 			} while (false);
 			$pos = $0;
@@ -439,11 +439,11 @@ public class Generator extends GeneratorHelper {
 				int $1 = $pos;
 				$2: do {
 					do {
-						S$(); // ~S?
+						__$(); // ~__?
 						if (!$string("=")) continue; // "="
-						S$(); // ~S?
+						__$(); // ~__?
 						if (!$string("<")) continue; // "<"
-						while (elem$()); // elem*
+						while (__elem$()); // __elem*
 						if (!$string(">")) continue; // ">"
 						continue $2;
 					} while (false);
@@ -454,16 +454,16 @@ public class Generator extends GeneratorHelper {
 					int $3 = $pos;
 					$4: do {
 						do {
-							S$(); // ~S?
+							__$(); // ~__?
 							if (!$string("=")) continue; // "="
-							S$(); // ~S?
+							__$(); // ~__?
 							if (!ID$()) continue; // ID
 							continue $4;
 						} while (false);
 						$pos = $3;
 					} while (false);
 					PARAM$(); // PARAM?
-					S$(); // ~S?
+					__$(); // ~__?
 					int $5 = $pos;
 					$6: do {
 						do {
@@ -490,21 +490,21 @@ public class Generator extends GeneratorHelper {
 				$7: do {
 					int $8 = $pos;
 					do {
-						S$(); // ~S?
+						__$(); // ~__?
 						if (!$string("=")) continue; // "="
-						S$(); // ~S?
+						__$(); // ~__?
 						if (!$string("<")) continue; // "<"
-						while (elem$()); // elem*
+						while (__elem$()); // __elem*
 						if (!$string(">")) continue; // ">"
 						$pos = $8;
-						S$(); // ~S?
+						__$(); // ~__?
 						$pos += 1; // "="
-						S$(); // ~S?
+						__$(); // ~__?
 						pos = symbol.image();
 						$pos += 1; // "<"
-						for (int $9 = $pos; elem$(); $9 = $pos) {
+						for (int $9 = $pos; __elem$(); $9 = $pos) {
 							$pos = $9;
-							elem(); // elem*
+							__elem(); // __elem*
 						}
 						$pos += 1; // ">"
 						symbol.image(id, pos);
@@ -514,15 +514,15 @@ public class Generator extends GeneratorHelper {
 					$10: do {
 						int $11 = $pos;
 						do {
-							S$(); // ~S?
+							__$(); // ~__?
 							if (!$string("=")) continue; // "="
-							S$(); // ~S?
+							__$(); // ~__?
 							if (!ID$()) continue; // ID
 							$pos = $11;
 							value = id + " = ";
-							S$(); // ~S?
+							__$(); // ~__?
 							$pos += 1; // "="
-							S$(); // ~S?
+							__$(); // ~__?
 							id = ID(); // ID
 							continue $10;
 						} while (false);
@@ -533,7 +533,7 @@ public class Generator extends GeneratorHelper {
 						$pos = $12;
 						param = PARAM(); // PARAM?
 					}
-					S$(); // ~S?
+					__$(); // ~__?
 					$13: do {
 						int $14 = $pos;
 						do {
@@ -569,9 +569,9 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!$string("~")) continue; // "~"
-				S$(); // ~S?
+				__$(); // ~__?
 				if (!ID$()) continue; // ID
-				S$(); // ~S?
+				__$(); // ~__?
 				int $15 = $pos;
 				$16: do {
 					do {
@@ -593,9 +593,9 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				String id;
 				$pos += 1; // "~"
-				S$(); // ~S?
+				__$(); // ~__?
 				id = ID(); // ID
-				S$(); // ~S?
+				__$(); // ~__?
 				$17: do {
 					int $18 = $pos;
 					do {
@@ -630,7 +630,7 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!$string(".")) continue; // "."
-				S$(); // ~S?
+				__$(); // ~__?
 				int $19 = $pos;
 				$20: do {
 					do {
@@ -651,7 +651,7 @@ public class Generator extends GeneratorHelper {
 				} while (false);
 				$pos = $0;
 				$pos += 1; // "."
-				S$(); // ~S?
+				__$(); // ~__?
 				$21: do {
 					int $22 = $pos;
 					do {
@@ -686,7 +686,7 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!STRING$()) continue; // STRING
-				S$(); // ~S?
+				__$(); // ~__?
 				int $23 = $pos;
 				$24: do {
 					do {
@@ -708,10 +708,10 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				String image;
 				int length;
-				int $25 = $lock(1); // =<
+				int $25 = $lock(1); // = <
 				length = STRING(); // STRING
 				image = $image($25); // >
-				S$(); // ~S?
+				__$(); // ~__?
 				$26: do {
 					int $27 = $pos;
 					do {
@@ -746,7 +746,7 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!CHAR$()) continue; // CHAR
-				S$(); // ~S?
+				__$(); // ~__?
 				int $28 = $pos;
 				$29: do {
 					do {
@@ -768,7 +768,7 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				String image;
 				image = CHAR(); // CHAR
-				S$(); // ~S?
+				__$(); // ~__?
 				$30: do {
 					int $31 = $pos;
 					do {
@@ -803,7 +803,7 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!$string("&")) continue; // "&"
-				S$(); // ~S?
+				__$(); // ~__?
 				int $32 = $pos;
 				$33: do {
 					do {
@@ -830,13 +830,13 @@ public class Generator extends GeneratorHelper {
 				} while (false);
 				if ($32 == 0) {
 					if (!$string("(")) continue; // "("
-					if (!par$()) continue; // par
+					if (!_par_$()) continue; // _par_
 					if (!$string(")")) continue; // ")"
 				}
 				$pos = $0;
 				String image;
 				$pos += 1; // "&"
-				S$(); // ~S?
+				__$(); // ~__?
 				$34: do {
 					int $35 = $pos;
 					do {
@@ -858,7 +858,7 @@ public class Generator extends GeneratorHelper {
 					do {
 						if (!STRING$()) continue; // ~STRING
 						$pos = $35;
-						int $36 = $lock(1); // =<
+						int $36 = $lock(1); // = <
 						STRING$(); // ~STRING
 						image = $image($36); // >
 						symbol.pred_and("$string(" + image + ')', image);
@@ -875,7 +875,7 @@ public class Generator extends GeneratorHelper {
 					$pos = $35;
 					symbol.par();
 					$pos += 1; // "("
-					par(); // par
+					_par_(); // _par_
 					$pos += 1; // ")"
 					symbol.par_and();
 				} while (false);
@@ -884,7 +884,7 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!$string("!")) continue; // "!"
-				S$(); // ~S?
+				__$(); // ~__?
 				int $37 = $pos;
 				$38: do {
 					do {
@@ -911,13 +911,13 @@ public class Generator extends GeneratorHelper {
 				} while (false);
 				if ($37 == 0) {
 					if (!$string("(")) continue; // "("
-					if (!par$()) continue; // par
+					if (!_par_$()) continue; // _par_
 					if (!$string(")")) continue; // ")"
 				}
 				$pos = $0;
 				String image;
 				$pos += 1; // "!"
-				S$(); // ~S?
+				__$(); // ~__?
 				$39: do {
 					int $40 = $pos;
 					do {
@@ -939,7 +939,7 @@ public class Generator extends GeneratorHelper {
 					do {
 						if (!STRING$()) continue; // ~STRING
 						$pos = $40;
-						int $41 = $lock(1); // =<
+						int $41 = $lock(1); // = <
 						STRING$(); // ~STRING
 						image = $image($41); // >
 						symbol.pred_not("$string(" + image + ')', image);
@@ -956,7 +956,7 @@ public class Generator extends GeneratorHelper {
 					$pos = $40;
 					symbol.par();
 					$pos += 1; // "("
-					par(); // par
+					_par_(); // _par_
 					$pos += 1; // ")"
 					symbol.par_not();
 				} while (false);
@@ -965,9 +965,9 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!$string("(")) continue; // "("
-				if (!par$()) continue; // par
+				if (!_par_$()) continue; // _par_
 				if (!$string(")")) continue; // ")"
-				S$(); // ~S?
+				__$(); // ~__?
 				int $42 = $pos;
 				$43: do {
 					do {
@@ -989,9 +989,9 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				symbol.par();
 				$pos += 1; // "("
-				par(); // par
+				_par_(); // _par_
 				$pos += 1; // ")"
-				S$(); // ~S?
+				__$(); // ~__?
 				$44: do {
 					int $45 = $pos;
 					do {
@@ -1042,7 +1042,7 @@ public class Generator extends GeneratorHelper {
 				} while (false);
 				$pos = $47;
 			} while (false);
-			int $48 = $lock(1); // =<
+			int $48 = $lock(1); // = <
 			$49: for (;;) {
 				int $50 = $pos;
 				do {
@@ -1063,7 +1063,7 @@ public class Generator extends GeneratorHelper {
 			throw new ParseError(e);
 		}
 	}
-	protected boolean elem$() {
+	protected boolean __elem$() {
 		int $p = $cache(5);
 		if ($p > 0) {
 			$pos = $p;
@@ -1076,7 +1076,7 @@ public class Generator extends GeneratorHelper {
 			int $0 = $pos;
 			$1: do {
 				do {
-					if (!S$()) continue; // ~S
+					if (!__$()) continue; // ~__
 					continue $1;
 				} while (false);
 				$pos = $0;
@@ -1085,11 +1085,11 @@ public class Generator extends GeneratorHelper {
 					int $2 = $pos;
 					$3: do {
 						do {
-							S$(); // ~S?
+							__$(); // ~__?
 							if (!$string("=")) continue; // "="
-							S$(); // ~S?
+							__$(); // ~__?
 							if (!$string("<")) continue; // "<"
-							while (elem$()); // elem*
+							while (__elem$()); // __elem*
 							if (!$string(">")) continue; // ">"
 							continue $3;
 						} while (false);
@@ -1100,16 +1100,16 @@ public class Generator extends GeneratorHelper {
 						int $4 = $pos;
 						$5: do {
 							do {
-								S$(); // ~S?
+								__$(); // ~__?
 								if (!$string("=")) continue; // "="
-								S$(); // ~S?
+								__$(); // ~__?
 								if (!ID$()) continue; // ID
 								continue $5;
 							} while (false);
 							$pos = $4;
 						} while (false);
 						PARAM$(); // PARAM?
-						S$(); // ~S?
+						__$(); // ~__?
 						int $6 = $pos;
 						$7: do {
 							do {
@@ -1134,9 +1134,9 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!$string("~")) continue; // "~"
-					S$(); // ~S?
+					__$(); // ~__?
 					if (!ID$()) continue; // ID
-					S$(); // ~S?
+					__$(); // ~__?
 					int $8 = $pos;
 					$9: do {
 						do {
@@ -1160,7 +1160,7 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!$string(".")) continue; // "."
-					S$(); // ~S?
+					__$(); // ~__?
 					int $10 = $pos;
 					$11: do {
 						do {
@@ -1184,7 +1184,7 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!STRING$()) continue; // STRING
-					S$(); // ~S?
+					__$(); // ~__?
 					int $12 = $pos;
 					$13: do {
 						do {
@@ -1208,7 +1208,7 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!CHAR$()) continue; // CHAR
-					S$(); // ~S?
+					__$(); // ~__?
 					int $14 = $pos;
 					$15: do {
 						do {
@@ -1232,7 +1232,7 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!$string("&")) continue; // "&"
-					S$(); // ~S?
+					__$(); // ~__?
 					int $16 = $pos;
 					$17: do {
 						do {
@@ -1259,7 +1259,7 @@ public class Generator extends GeneratorHelper {
 					} while (false);
 					if ($16 == 0) {
 						if (!$string("(")) continue; // "("
-						if (!par$()) continue; // par
+						if (!_par_$()) continue; // _par_
 						if (!$string(")")) continue; // ")"
 					}
 					continue $1;
@@ -1267,7 +1267,7 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!$string("!")) continue; // "!"
-					S$(); // ~S?
+					__$(); // ~__?
 					int $18 = $pos;
 					$19: do {
 						do {
@@ -1294,7 +1294,7 @@ public class Generator extends GeneratorHelper {
 					} while (false);
 					if ($18 == 0) {
 						if (!$string("(")) continue; // "("
-						if (!par$()) continue; // par
+						if (!_par_$()) continue; // _par_
 						if (!$string(")")) continue; // ")"
 					}
 					continue $1;
@@ -1302,9 +1302,9 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!$string("(")) continue; // "("
-					if (!par$()) continue; // par
+					if (!_par_$()) continue; // _par_
 					if (!$string(")")) continue; // ")"
-					S$(); // ~S?
+					__$(); // ~__?
 					int $20 = $pos;
 					$21: do {
 						do {
@@ -1360,14 +1360,14 @@ public class Generator extends GeneratorHelper {
 		return $r;
 	}
 	@SymbolID(6)
-	public void par() {
+	public void _par_() {
 		try {
 			$0: for (;;) {
 				int $1 = $pos;
 				do {
-					if (!elem$()) continue; // elem
+					if (!__elem$()) continue; // __elem
 					$pos = $1;
-					elem(); // elem
+					__elem(); // __elem
 					continue $0;
 				} while (false);
 				$pos = $1;
@@ -1387,7 +1387,7 @@ public class Generator extends GeneratorHelper {
 			throw new ParseError(e);
 		}
 	}
-	protected boolean par$() {
+	protected boolean _par_$() {
 		int $p = $cache(6);
 		if ($p > 0) {
 			$pos = $p;
@@ -1400,7 +1400,7 @@ public class Generator extends GeneratorHelper {
 			$0: for (;;) {
 				int $1 = $pos;
 				do {
-					if (!elem$()) continue; // elem
+					if (!__elem$()) continue; // __elem
 					continue $0;
 				} while (false);
 				$pos = $1;
@@ -1434,25 +1434,13 @@ public class Generator extends GeneratorHelper {
 			$0: for (;;) {
 				int $1 = $pos;
 				do {
-					S$(); // ~S?
-					if (!$string(".")) continue; // "."
-					S$(); // ~S?
-					if (!TypeArguments$()) continue; // ~TypeArguments
+					__$(); // ~__?
+					if (!$string("[")) continue; // "["
+					__$(); // ~__?
+					if (!$string("]")) continue; // "]"
 					continue $0;
 				} while (false);
 				$pos = $1;
-				break;
-			}
-			$2: for (;;) {
-				int $3 = $pos;
-				do {
-					S$(); // ~S?
-					if (!$string("[")) continue; // "["
-					S$(); // ~S?
-					if (!$string("]")) continue; // "]"
-					continue $2;
-				} while (false);
-				$pos = $3;
 				break;
 			}
 			$ok(7, $p);
@@ -1478,23 +1466,24 @@ public class Generator extends GeneratorHelper {
 			int $0 = $pos;
 			$1: do {
 				do {
-					S$(); // ~S?
+					__$(); // ~__?
 					if (!$string("<")) continue; // "<"
-					if (!TypeArgument$()) continue; // ~TypeArgument
-					$2: for (;;) {
-						int $3 = $pos;
-						do {
-							if (!$string(",")) continue; // ","
-							if (!TypeArgument$()) continue; // ~TypeArgument
-							continue $2;
-						} while (false);
-						$pos = $3;
-						break;
-					}
+					if (!_TypeArgument_$()) continue; // ~_TypeArgument_
 					if (!$string(">")) continue; // ">"
 					continue $1;
 				} while (false);
 				$pos = $0;
+			} while (false);
+			int $2 = $pos;
+			$3: do {
+				do {
+					__$(); // ~__?
+					if (!$string(".")) continue; // "."
+					__$(); // ~__?
+					if (!TypeArguments$()) continue; // ~TypeArguments
+					continue $3;
+				} while (false);
+				$pos = $2;
 			} while (false);
 			$ok(8, $p);
 			break;
@@ -1502,10 +1491,10 @@ public class Generator extends GeneratorHelper {
 		return $r;
 	}
 	@SymbolID(9)
-	public void TypeArgument() {
-		if (!TypeArgument$()) throw new ParseError();
+	public void _TypeArgument_() {
+		if (!_TypeArgument_$()) throw new ParseError();
 	}
-	protected boolean TypeArgument$() {
+	protected boolean _TypeArgument_$() {
 		int $p = $cache(9);
 		if ($p > 0) {
 			$pos = $p;
@@ -1515,15 +1504,15 @@ public class Generator extends GeneratorHelper {
 		$p = $pos;
 		boolean $r = true;
 		do {
-			S$(); // ~S?
+			__$(); // ~__?
 			int $0 = $pos;
 			$1: do {
 				do {
 					if (!$string("?")) continue; // "?"
+					__$(); // ~__?
 					int $2 = $pos;
 					$3: do {
 						do {
-							S$(); // ~S?
 							int $4 = $pos;
 							$5: do {
 								do {
@@ -1536,7 +1525,7 @@ public class Generator extends GeneratorHelper {
 							if ($4 == 0) {
 								if (!$string("super")) continue; // "super"
 							}
-							if (!S$()) continue; // ~S
+							if (!__$()) continue; // ~__
 							if (!Type$()) continue; // ~Type
 							continue $3;
 						} while (false);
@@ -1550,33 +1539,41 @@ public class Generator extends GeneratorHelper {
 			if ($0 == 0) {
 				if (!Type$()) continue; // ~Type
 			}
-			S$(); // ~S?
+			__$(); // ~__?
+			int $6 = $pos;
+			$7: do {
+				do {
+					if (!$string(",")) continue; // ","
+					if (!_TypeArgument_$()) continue; // ~_TypeArgument_
+					continue $7;
+				} while (false);
+				$pos = $6;
+			} while (false);
 			$ok(9, $p);
 			break;
 		} while ($r = $ng(9, $pos = $p));
 		return $r;
 	}
-	@SymbolID(10)
-	public void main() {
+	public void $main() {
 		try {
 			String command, arg, code;
 			$0: for (;;) {
 				int $1 = $pos;
 				do {
-					if (!S$()) continue; // ~S
+					if (!__$()) continue; // ~__
 					$pos = $1;
-					S$(); // ~S
+					__$(); // ~__
 					continue $0;
 				} while (false);
 				$pos = $1;
 				do {
 					if (!ID$()) continue; // ID
-					S$(); // ~S?
+					__$(); // ~__?
 					if (!$string("=")) continue; // "="
 					$2: for (;;) {
 						int $3 = $pos;
 						do {
-							if (!S$()) continue; // ~S
+							if (!__$()) continue; // ~__
 							continue $2;
 						} while (false);
 						$pos = $3;
@@ -1608,14 +1605,14 @@ public class Generator extends GeneratorHelper {
 					if (!$string(";")) continue; // ";"
 					$pos = $1;
 					command = ID(); // ID
-					S$(); // ~S?
+					__$(); // ~__?
 					$pos += 1; // "="
 					$6: for (;;) {
 						int $7 = $pos;
 						do {
-							if (!S$()) continue; // ~S
+							if (!__$()) continue; // ~__
 							$pos = $7;
-							S$(); // ~S
+							__$(); // ~__
 							continue $6;
 						} while (false);
 						$pos = $7;
@@ -1634,7 +1631,7 @@ public class Generator extends GeneratorHelper {
 							if (!$string("\"")) continue; // "\""
 							$pos = $7;
 							$pos += 1; // "\""
-							int $10 = $lock(1); // =<
+							int $10 = $lock(1); // = <
 							$11: for (;;) {
 								int $12 = $pos;
 								do {
@@ -1658,7 +1655,7 @@ public class Generator extends GeneratorHelper {
 							if (!$char($CHAR[5])) continue; // [0-9]
 							while ($char($CHAR[5])) ; // [0-9]*
 							$pos = $7;
-							int $13 = $lock(1); // =<
+							int $13 = $lock(1); // = <
 							$string("-"); // "-"?
 							++$pos; // [0-9]
 							while ($char($CHAR[5])) ; // [0-9]*
@@ -1718,7 +1715,7 @@ public class Generator extends GeneratorHelper {
 						} while (false);
 						$pos = $19;
 					} while (false);
-					int $20 = $lock(1); // =<
+					int $20 = $lock(1); // = <
 					$21: for (;;) {
 						int $22 = $pos;
 						do {
@@ -1743,32 +1740,36 @@ public class Generator extends GeneratorHelper {
 				int $24 = $pos;
 				do {
 					if (!$string("<")) continue; // "<"
-					S$(); // ~S?
+					__$(); // ~__?
 					Type$(); // ~Type?
-					S$(); // ~S?
+					__$(); // ~__?
 					if (!$string(">")) continue; // ">"
-					S$(); // ~S?
-					if (!ID$()) continue; // ID
+					__$(); // ~__?
+					if (!$char($CHAR[6])) continue; // [$A-Za-z_-]
+					while ($char($CHAR[2])) ; // [$0-9A-Za-z_-]*
 					PARAM$(); // PARAM?
-					if (!par$()) continue; // par
+					if (!_par_$()) continue; // _par_
 					$pos = $24;
 					$pos += 1; // "<"
-					S$(); // ~S?
-					int $25 = $lock(1); // =<
+					__$(); // ~__?
+					int $25 = $lock(1); // = <
 					Type$(); // ~Type?
 					type = $image($25); // >
-					S$(); // ~S?
+					__$(); // ~__?
 					$pos += 1; // ">"
-					S$(); // ~S?
-					id = ID(); // ID
+					__$(); // ~__?
+					int $26 = $lock(1); // = <
+					++$pos; // [$A-Za-z_-]
+					while ($char($CHAR[2])) ; // [$0-9A-Za-z_-]*
+					id = $image($26); // >
 					param = "()";
-					int $26 = $pos;
+					int $27 = $pos;
 					if (PARAM$()) {
-						$pos = $26;
+						$pos = $27;
 						param = PARAM(); // PARAM?
 					}
-					symbol = new Symbol(type, id, param);
-					par(); // par
+					symbol = new Symbol(type, id.replace('-', '_'), param);
+					_par_(); // _par_
 					symbol.main();
 					continue $23;
 				} while (false);
@@ -1783,124 +1784,15 @@ public class Generator extends GeneratorHelper {
 			throw new ParseError(e);
 		}
 	}
-	protected boolean main$() {
-		int $p = $cache(10);
-		if ($p > 0) {
-			$pos = $p;
-			return true;
-		}
-		if ($p < 0) return false;
-		$p = $pos;
-		boolean $r = true;
-		do {
-			$0: for (;;) {
-				int $1 = $pos;
-				do {
-					if (!S$()) continue; // ~S
-					continue $0;
-				} while (false);
-				$pos = $1;
-				do {
-					if (!ID$()) continue; // ID
-					S$(); // ~S?
-					if (!$string("=")) continue; // "="
-					$2: for (;;) {
-						int $3 = $pos;
-						do {
-							if (!S$()) continue; // ~S
-							continue $2;
-						} while (false);
-						$pos = $3;
-						do {
-							if (!$string("\"")) continue; // "\""
-							$4: for (;;) {
-								int $5 = $pos;
-								do {
-									if ($string("\"")) continue; // !"\""
-									if (!$any()) continue; // .
-									continue $4;
-								} while (false);
-								$pos = $5;
-								break;
-							}
-							if (!$string("\"")) continue; // "\""
-							continue $2;
-						} while (false);
-						$pos = $3;
-						do {
-							$string("-"); // "-"?
-							if (!$char($CHAR[5])) continue; // [0-9]
-							while ($char($CHAR[5])) ; // [0-9]*
-							continue $2;
-						} while (false);
-						$pos = $3;
-						break;
-					}
-					if (!$string(";")) continue; // ";"
-					continue $0;
-				} while (false);
-				$pos = $1;
-				do {
-					if (!$string(":")) continue; // ":"
-					int $6 = $pos;
-					$7: do {
-						do {
-							if (!$string(" ")) continue; // " "
-							continue $7;
-						} while (false);
-						$pos = $6;
-						do {
-							if (!$string("\t")) continue; // "\t"
-							continue $7;
-						} while (false);
-						$pos = $6;
-					} while (false);
-					$8: for (;;) {
-						int $9 = $pos;
-						do {
-							if ($string("\n")) continue; // !"\n"
-							if (!$any()) continue; // .
-							continue $8;
-						} while (false);
-						$pos = $9;
-						break;
-					}
-					continue $0;
-				} while (false);
-				$pos = $1;
-				break;
-			}
-			$10: for (;;) {
-				int $11 = $pos;
-				do {
-					if (!$string("<")) continue; // "<"
-					S$(); // ~S?
-					Type$(); // ~Type?
-					S$(); // ~S?
-					if (!$string(">")) continue; // ">"
-					S$(); // ~S?
-					if (!ID$()) continue; // ID
-					PARAM$(); // PARAM?
-					if (!par$()) continue; // par
-					continue $10;
-				} while (false);
-				$pos = $11;
-				break;
-			}
-			if ($any()) continue; // !.
-			$ok(10, $p);
-			break;
-		} while ($r = $ng(10, $pos = $p));
-		return $r;
-	}
-	@SymbolID(11)
-	public void $open(Object in, int line) {$open(in, line, 11);}
+	@SymbolID(10)
+	public void $open(Object in, int line) {$open(in, line, 10);}
 	private static final java.util.regex.Pattern[] $CHAR = new java.util.regex.Pattern[]{
 		java.util.regex.Pattern.compile("[ \t\r\n]"),
-		java.util.regex.Pattern.compile("[$A-Za-z_]"),
-		java.util.regex.Pattern.compile("[$0-9A-Za-z_]"),
+		java.util.regex.Pattern.compile("[A-Za-z_-]"),
+		java.util.regex.Pattern.compile("[$0-9A-Za-z_-]"),
 		java.util.regex.Pattern.compile("[0-3]"),
 		java.util.regex.Pattern.compile("[0-7]"),
-		java.util.regex.Pattern.compile("[0-9]")
+		java.util.regex.Pattern.compile("[0-9]"),
+		java.util.regex.Pattern.compile("[$A-Za-z_-]")
 	};
 }

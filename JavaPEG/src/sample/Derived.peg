@@ -3,7 +3,7 @@ package = "sample";
 import = "java.util.*";
 class = "Derived" "Base";
 :	public static void main(String[] args) throws Exception {
-:		new Derived(System.in).main();
+:		new Derived(System.in).$main();
 :	}
 :	HashMap<String, Integer> var = new HashMap<String, Integer>();
 
@@ -12,22 +12,21 @@ class = "Derived" "Base";
 	image = < [A-Za-z_] [0-9A-Za-z_]* >
 : return image;
 
-<void> main
+<void> $main
 : String id;
 : int value;
-	( ~S
-	/ id = ID ~S? "=" value = sum ";"
+	( ~--? id = ID ~--? "=" value = -sum- ";"
 		: var.put(id, value);
 		: System.out.println(id + " = " + value);
-	/ value = sum ";" : System.out.println(value);
-	)* ~S? ";"
+	/ value = -sum- ";" : System.out.println(value);
+	)* ~--? ";"
 
-<int> unary
+<int> -unary-
 : int value;
-	~S?
-	( "-" ~S? value = element2
+	~--?
+	( "-" ~--? value = element2 : value = -value;
 	/ value = element2
-	)
+	) ~--?
 : return value;
 
 <int> element2

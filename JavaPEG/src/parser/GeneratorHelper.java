@@ -359,6 +359,11 @@ public abstract class GeneratorHelper extends Parser {
 			this.type = type;
 			this.name = name;
 			this.param = param;
+			par();
+			if (name.charAt(0) == '$') {
+				if (type.isEmpty()) this.type = "void";
+				return;
+			}
 			if (methods != null) for (Method m : methods) {
 				if (!m.getName().equals(name)) continue;
 				SymbolID a = m.getAnnotation(SymbolID.class);
@@ -368,13 +373,14 @@ public abstract class GeneratorHelper extends Parser {
 				}
 			}
 			if (symbol_id < 0) symbol_id = ++new_id;
-			par();
 		}
 
 		public void main() {
 			unique = 0;
-			if (symbol_id != new_id) print("@Override");
-			print("@SymbolID(", symbol_id, ')');
+			if (symbol_id >= 0) {
+				if (symbol_id != new_id) print("@Override");
+				print("@SymbolID(", symbol_id, ')');
+			}
 			if (type.isEmpty()) {
 				print("public void ", name, param, " {");
 				indent(() -> print("if (!", name, "$()) throw new ParseError();"), '}');
@@ -404,6 +410,7 @@ public abstract class GeneratorHelper extends Parser {
 					print('}');
 				}, '}');
 			}
+			if (symbol_id < 0) return;
 			unique = 0;
 			print("protected boolean ", name, "$() {");
 			indent(() -> {
@@ -472,7 +479,7 @@ public abstract class GeneratorHelper extends Parser {
 		public String[] image() {
 			String[] pos = new String[1];
 			getLast().getLast().addLast((Option) () -> {
-				print("int ", pos[0] = unique(), " = $lock(1); // =<");
+				print("int ", pos[0] = unique(), " = $lock(1); // = <");
 			});
 			return pos;
 		}

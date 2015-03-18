@@ -2,43 +2,41 @@ out = "src/sample/Base.java";
 package = "sample";
 class = "Base";
 :	public static void main(String[] args) throws Exception {
-:		new Base(System.in).main();
+:		new Base(System.in).$main();
 :	}
 
-<> S
+<> --
 	( [ \t\r\n]
 	/ "//" ( !"\n" . )*
-	) [ \t\r\n]* ~S?
+	) [ \t\r\n]* ~--?
 
-<void> main
+<void> $main
 : int value;
-	( value = sum ";" : System.out.println(value);
-	)* ~S? ";"
+	( value = -sum- ";" : System.out.println(value);
+	)* ~--? ";"
 
-<int> sum
+<int> -sum-
 : int lhs, rhs;
-	lhs = term
-	( ~S
-	/ "+" rhs = term : lhs += rhs;
-	/ "-" rhs = term : lhs -= rhs;
+	lhs = -term-
+	( "+" rhs = -term- : lhs += rhs;
+	/ "-" rhs = -term- : lhs -= rhs;
 	)*
 : return lhs;
 
-<int> term
+<int> -term-
 : int lhs, rhs;
-	lhs=unary
-	( ~S
-	/ "*" rhs = unary : lhs *= rhs;
-	/ "/" rhs = unary : lhs /= rhs;
+	lhs = -unary-
+	( "*" rhs = -unary- : lhs *= rhs;
+	/ "/" rhs = -unary- : lhs /= rhs;
 	)*
 : return lhs;
 
-<int> unary
+<int> -unary-
 : int value;
-	~S?
-	( "-" ~S? value = element
+	~--?
+	( "-" ~--? value = element : value = -value;
 	/ value = element
-	)
+	) ~--?
 : return value;
 
 <int> element
@@ -47,5 +45,5 @@ class = "Base";
 : return Integer.parseInt(image);
 /
 : int value;
-	"(" value = sum ")"
+	"(" value = -sum- ")"
 : return value;
