@@ -32,7 +32,7 @@ Symbol name starts with dollar (`$`) means it's start symbol and never called in
   * __& ( _elements_ / _elements_ ... )__ - and predicate for group
   * __! _element___ - not predicate
   * __! ( _elements_ / _elements_ ... )__ - not predicate for group  
-  _note:_ __`!( a / b / c )`__ is same as __`!a !b !c`__, and maybe the latter is better.
+  _note:_ __`!( a / b / c )`__ is same as __`!a !b !c`__ and maybe the latter is better.
  * Action elements
   * ___image_ = < _elements_ >__ - retrieve image string  
   _note:_ __`image = < a / b >`__ occurs error, __`image = < ( a / b ) >`__ is right.
