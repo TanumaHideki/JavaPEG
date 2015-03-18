@@ -71,8 +71,7 @@ _note2:_ Symbol name starts with dollar (`$`) means it's start symbol and never 
   * '__`//`__' _ALineOfComment_
 
 ## Header commands
-_note:_  
-Actually the header commands are implemented as methods named '$'+_command_ and invoked by Java reflection.
+_note:_ Actually the header commands are implemented as methods named '$'+_command_ and invoked by Java reflection.
 So, extended generator may implement new header commands likewise.
  * __out__ = "*output_file_name*" ;
   * Redirect result output to a file.
