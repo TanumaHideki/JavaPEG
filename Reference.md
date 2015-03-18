@@ -7,7 +7,7 @@ Symbol name starts with dollar (`$`) means it's start symbol and never called in
  * Terminal elements
   * __"_string_"__ - basic string  
   _e.g._ __`"if" expression "then" statement`__
-  * __[_pattern_]__ - character pattern  
+  * __[_pattern_]__ - character pattern, actually regular expression in Java  
   _e.g._ __`[A-Za-z_] [0-9A-Za-z_]*`__
   * __.__ (dot) - any character, not EOF  
   _e.g._ __`"//" ( !"\n" . )*`__
@@ -22,18 +22,19 @@ Symbol name starts with dollar (`$`) means it's start symbol and never called in
   * __( _elements_ / _elements_ ... )__ - ordered choice
  * Postfix modifiers
   * ___element_ ?__ - optional
-  * __( _group_ )?__ - optional for group
+  * __( _elements_ )?__ - optional for sequence
   * ___element_ \*__ - zero or more
-  * __( _group_ )\*__ - zero or more for group
+  * __( _elements_ )\*__ - zero or more for sequence
   * ___element_ +__ - one or more
-  * __( _group_ )+__ - one or more for group
+  * __( _elements_ )+__ - one or more for sequence
  * Prefix modifiers
   * __& _element___ - and predicate
-  * __& ( _group_ )__ - and predicate for group
+  * __& ( _elements_ )__ - and predicate for sequence
   * __! _element___ - not predicate
-  * __! ( _group_ )__ - not predicate for group
+  * __! ( _elements_ )__ - not predicate for sequence
  * Action elements
-  * ___image_ = < _elements_ >__ - retrieve image string
+  * ___image_ = < _elements_ >__ - retrieve image string  
+  _note:_ __`image = < a / b >`__ occurs error, __`image = < ( a / b ) >`__ is right.
   * __: *java_code*__ - embedded action code
  * Comment
   * __// *comment*__ - comment
