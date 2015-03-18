@@ -22,16 +22,16 @@ Symbol name starts with dollar (`$`) means it's start symbol and never called in
   * __( _elements_ / _elements_ ... )__ - ordered choice
  * Postfix modifiers
   * ___element_ ?__ - optional
-  * __( _elements_ )?__ - optional for sequence
+  * __( _elements_ / _elements_ ... )?__ - optional for group
   * ___element_ \*__ - zero or more
-  * __( _elements_ )\*__ - zero or more for sequence
+  * __( _elements_ / _elements_ ... )\*__ - zero or more for group
   * ___element_ +__ - one or more
-  * __( _elements_ )+__ - one or more for sequence
+  * __( _elements_ / _elements_ ... )+__ - one or more for group
  * Prefix modifiers
   * __& _element___ - and predicate
-  * __& ( _elements_ )__ - and predicate for sequence
+  * __& ( _elements_ / _elements_ ... )__ - and predicate for group
   * __! _element___ - not predicate
-  * __! ( _elements_ )__ - not predicate for sequence
+  * __! ( _elements_ / _elements_ ... )__ - not predicate for group
  * Action elements
   * ___image_ = < _elements_ >__ - retrieve image string  
   _note:_ __`image = < a / b >`__ occurs error, __`image = < ( a / b ) >`__ is right.
