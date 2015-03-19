@@ -6,6 +6,8 @@ _note2:_ Symbol name starts with dollar (`$`) means it's start symbol and never 
  * Terminal elements
   * __"_string_"__ - basic string  
   _e.g._ __`"if" expression "then" statement`__
+  * __"_string_"i__ - basic string (case insensitive)  
+  _e.g._ __`"SELECT"i columns "FROM"i table ( "WHERE"i condition )?`__
   * __[_pattern_]__ - character pattern, actually regular expression in Java  
   _e.g._ __`[A-Za-z_] [0-9A-Za-z_]*`__
   * __.__ (dot) - any character, not EOF  
