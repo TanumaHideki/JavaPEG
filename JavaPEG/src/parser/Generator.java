@@ -686,60 +686,82 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!STRING$()) continue; // STRING
-				__$(); // ~__?
 				int $23 = $pos;
 				$24: do {
 					do {
-						if (!$string("?")) continue; // "?"
-						continue $24;
-					} while (false);
-					$pos = $23;
-					do {
-						if (!$string("*")) continue; // "*"
-						continue $24;
-					} while (false);
-					$pos = $23;
-					do {
-						if (!$string("+")) continue; // "+"
+						if (!$string("i")) continue; // "i"
 						continue $24;
 					} while (false);
 					$pos = $23;
 				} while (false);
-				$pos = $0;
-				String image;
-				int length;
-				int $25 = $lock(1); // = <
-				length = STRING(); // STRING
-				image = $image($25); // >
 				__$(); // ~__?
+				int $25 = $pos;
 				$26: do {
-					int $27 = $pos;
 					do {
 						if (!$string("?")) continue; // "?"
-						$pos = $27;
-						$pos += 1; // "?"
-						symbol.pred_option("$string(" + image + ')', image);
 						continue $26;
 					} while (false);
-					$pos = $27;
+					$pos = $25;
 					do {
 						if (!$string("*")) continue; // "*"
-						$pos = $27;
-						$pos += 1; // "*"
-						symbol.pred_more("$string(" + image + ')', image);
 						continue $26;
 					} while (false);
-					$pos = $27;
+					$pos = $25;
 					do {
 						if (!$string("+")) continue; // "+"
-						$pos = $27;
-						$pos += 1; // "+"
-						symbol.pred("$string(" + image + ')', "$pos += " + length, image);
-						symbol.pred_more("$string(" + image + ')', image);
 						continue $26;
 					} while (false);
-					$pos = $27;
-					symbol.pred("$string(" + image + ')', "$pos += " + length, image);
+					$pos = $25;
+				} while (false);
+				$pos = $0;
+				String image, imagei, f = "$string(";
+				int length;
+				int $27 = $lock(1); // = <
+				int $28 = $lock(1); // = <
+				length = STRING(); // STRING
+				image = $image($28); // >
+				$29: do {
+					int $30 = $pos;
+					do {
+						if (!$string("i")) continue; // "i"
+						$pos = $30;
+						$pos += 1; // "i"
+						f = "$stringi(";
+						image = image.toLowerCase();
+						continue $29;
+					} while (false);
+					$pos = $30;
+				} while (false);
+				imagei = $image($27); // >
+				__$(); // ~__?
+				$31: do {
+					int $32 = $pos;
+					do {
+						if (!$string("?")) continue; // "?"
+						$pos = $32;
+						$pos += 1; // "?"
+						symbol.pred_option(f + image + ')', imagei);
+						continue $31;
+					} while (false);
+					$pos = $32;
+					do {
+						if (!$string("*")) continue; // "*"
+						$pos = $32;
+						$pos += 1; // "*"
+						symbol.pred_more(f + image + ')', imagei);
+						continue $31;
+					} while (false);
+					$pos = $32;
+					do {
+						if (!$string("+")) continue; // "+"
+						$pos = $32;
+						$pos += 1; // "+"
+						symbol.pred(f + image + ')', "$pos += " + length, imagei);
+						symbol.pred_more(f + image + ')', imagei);
+						continue $31;
+					} while (false);
+					$pos = $32;
+					symbol.pred(f + image + ')', "$pos += " + length, imagei);
 				} while (false);
 				return;
 			} while (false);
@@ -747,55 +769,55 @@ public class Generator extends GeneratorHelper {
 			do {
 				if (!CHAR$()) continue; // CHAR
 				__$(); // ~__?
-				int $28 = $pos;
-				$29: do {
+				int $33 = $pos;
+				$34: do {
 					do {
 						if (!$string("?")) continue; // "?"
-						continue $29;
+						continue $34;
 					} while (false);
-					$pos = $28;
+					$pos = $33;
 					do {
 						if (!$string("*")) continue; // "*"
-						continue $29;
+						continue $34;
 					} while (false);
-					$pos = $28;
+					$pos = $33;
 					do {
 						if (!$string("+")) continue; // "+"
-						continue $29;
+						continue $34;
 					} while (false);
-					$pos = $28;
+					$pos = $33;
 				} while (false);
 				$pos = $0;
 				String image;
 				image = CHAR(); // CHAR
 				__$(); // ~__?
-				$30: do {
-					int $31 = $pos;
+				$35: do {
+					int $36 = $pos;
 					do {
 						if (!$string("?")) continue; // "?"
-						$pos = $31;
+						$pos = $36;
 						$pos += 1; // "?"
 						symbol.pred_option(pred_char(image), image);
-						continue $30;
+						continue $35;
 					} while (false);
-					$pos = $31;
+					$pos = $36;
 					do {
 						if (!$string("*")) continue; // "*"
-						$pos = $31;
+						$pos = $36;
 						$pos += 1; // "*"
 						symbol.pred_more(pred_char(image), image);
-						continue $30;
+						continue $35;
 					} while (false);
-					$pos = $31;
+					$pos = $36;
 					do {
 						if (!$string("+")) continue; // "+"
-						$pos = $31;
+						$pos = $36;
 						$pos += 1; // "+"
 						symbol.pred(pred_char(image), "++$pos", image);
 						symbol.pred_more(pred_char(image), image);
-						continue $30;
+						continue $35;
 					} while (false);
-					$pos = $31;
+					$pos = $36;
 					symbol.pred(pred_char(image), "++$pos", image);
 				} while (false);
 				return;
@@ -803,87 +825,6 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			do {
 				if (!$string("&")) continue; // "&"
-				__$(); // ~__?
-				int $32 = $pos;
-				$33: do {
-					do {
-						if (!ID$()) continue; // ID
-						continue $33;
-					} while (false);
-					$pos = $32;
-					do {
-						if (!$string(".")) continue; // "."
-						continue $33;
-					} while (false);
-					$pos = $32;
-					do {
-						if (!STRING$()) continue; // ~STRING
-						continue $33;
-					} while (false);
-					$pos = $32;
-					do {
-						if (!CHAR$()) continue; // CHAR
-						continue $33;
-					} while (false);
-					$pos = $32;
-					$32 = 0;
-				} while (false);
-				if ($32 == 0) {
-					if (!$string("(")) continue; // "("
-					if (!_par_$()) continue; // _par_
-					if (!$string(")")) continue; // ")"
-				}
-				$pos = $0;
-				String image;
-				$pos += 1; // "&"
-				__$(); // ~__?
-				$34: do {
-					int $35 = $pos;
-					do {
-						if (!ID$()) continue; // ID
-						$pos = $35;
-						image = ID(); // ID
-						symbol.pred_and(image + "$()", image);
-						continue $34;
-					} while (false);
-					$pos = $35;
-					do {
-						if (!$string(".")) continue; // "."
-						$pos = $35;
-						$pos += 1; // "."
-						symbol.pred_and("$any()", ".");
-						continue $34;
-					} while (false);
-					$pos = $35;
-					do {
-						if (!STRING$()) continue; // ~STRING
-						$pos = $35;
-						int $36 = $lock(1); // = <
-						STRING$(); // ~STRING
-						image = $image($36); // >
-						symbol.pred_and("$string(" + image + ')', image);
-						continue $34;
-					} while (false);
-					$pos = $35;
-					do {
-						if (!CHAR$()) continue; // CHAR
-						$pos = $35;
-						image = CHAR(); // CHAR
-						symbol.pred_and(pred_char(image), image);
-						continue $34;
-					} while (false);
-					$pos = $35;
-					symbol.par();
-					$pos += 1; // "("
-					_par_(); // _par_
-					$pos += 1; // ")"
-					symbol.par_and();
-				} while (false);
-				return;
-			} while (false);
-			$pos = $0;
-			do {
-				if (!$string("!")) continue; // "!"
 				__$(); // ~__?
 				int $37 = $pos;
 				$38: do {
@@ -899,6 +840,14 @@ public class Generator extends GeneratorHelper {
 					$pos = $37;
 					do {
 						if (!STRING$()) continue; // ~STRING
+						int $39 = $pos;
+						$40: do {
+							do {
+								if (!$string("i")) continue; // "i"
+								continue $40;
+							} while (false);
+							$pos = $39;
+						} while (false);
 						continue $38;
 					} while (false);
 					$pos = $37;
@@ -916,44 +865,179 @@ public class Generator extends GeneratorHelper {
 				}
 				$pos = $0;
 				String image;
-				$pos += 1; // "!"
+				$pos += 1; // "&"
 				__$(); // ~__?
-				$39: do {
-					int $40 = $pos;
+				$41: do {
+					int $42 = $pos;
 					do {
 						if (!ID$()) continue; // ID
-						$pos = $40;
+						$pos = $42;
 						image = ID(); // ID
-						symbol.pred_not(image + "$()", image);
-						continue $39;
+						symbol.pred_and(image + "$()", image);
+						continue $41;
 					} while (false);
-					$pos = $40;
+					$pos = $42;
 					do {
 						if (!$string(".")) continue; // "."
-						$pos = $40;
+						$pos = $42;
 						$pos += 1; // "."
-						symbol.pred_not("$any()", ".");
-						continue $39;
+						symbol.pred_and("$any()", ".");
+						continue $41;
 					} while (false);
-					$pos = $40;
+					$pos = $42;
 					do {
 						if (!STRING$()) continue; // ~STRING
-						$pos = $40;
-						int $41 = $lock(1); // = <
+						int $43 = $pos;
+						$44: do {
+							do {
+								if (!$string("i")) continue; // "i"
+								continue $44;
+							} while (false);
+							$pos = $43;
+						} while (false);
+						$pos = $42;
+						String imagei, f = "$string(";
+						int $45 = $lock(1); // = <
+						int $46 = $lock(1); // = <
 						STRING$(); // ~STRING
-						image = $image($41); // >
-						symbol.pred_not("$string(" + image + ')', image);
-						continue $39;
+						image = $image($46); // >
+						$47: do {
+							int $48 = $pos;
+							do {
+								if (!$string("i")) continue; // "i"
+								$pos = $48;
+								$pos += 1; // "i"
+								f = "$stringi(";
+								image = image.toLowerCase();
+								continue $47;
+							} while (false);
+							$pos = $48;
+						} while (false);
+						imagei = $image($45); // >
+						symbol.pred_and(f + image + ')', imagei);
+						continue $41;
 					} while (false);
-					$pos = $40;
+					$pos = $42;
 					do {
 						if (!CHAR$()) continue; // CHAR
-						$pos = $40;
+						$pos = $42;
+						image = CHAR(); // CHAR
+						symbol.pred_and(pred_char(image), image);
+						continue $41;
+					} while (false);
+					$pos = $42;
+					symbol.par();
+					$pos += 1; // "("
+					_par_(); // _par_
+					$pos += 1; // ")"
+					symbol.par_and();
+				} while (false);
+				return;
+			} while (false);
+			$pos = $0;
+			do {
+				if (!$string("!")) continue; // "!"
+				__$(); // ~__?
+				int $49 = $pos;
+				$50: do {
+					do {
+						if (!ID$()) continue; // ID
+						continue $50;
+					} while (false);
+					$pos = $49;
+					do {
+						if (!$string(".")) continue; // "."
+						continue $50;
+					} while (false);
+					$pos = $49;
+					do {
+						if (!STRING$()) continue; // ~STRING
+						int $51 = $pos;
+						$52: do {
+							do {
+								if (!$string("i")) continue; // "i"
+								continue $52;
+							} while (false);
+							$pos = $51;
+						} while (false);
+						continue $50;
+					} while (false);
+					$pos = $49;
+					do {
+						if (!CHAR$()) continue; // CHAR
+						continue $50;
+					} while (false);
+					$pos = $49;
+					$49 = 0;
+				} while (false);
+				if ($49 == 0) {
+					if (!$string("(")) continue; // "("
+					if (!_par_$()) continue; // _par_
+					if (!$string(")")) continue; // ")"
+				}
+				$pos = $0;
+				String image;
+				$pos += 1; // "!"
+				__$(); // ~__?
+				$53: do {
+					int $54 = $pos;
+					do {
+						if (!ID$()) continue; // ID
+						$pos = $54;
+						image = ID(); // ID
+						symbol.pred_not(image + "$()", image);
+						continue $53;
+					} while (false);
+					$pos = $54;
+					do {
+						if (!$string(".")) continue; // "."
+						$pos = $54;
+						$pos += 1; // "."
+						symbol.pred_not("$any()", ".");
+						continue $53;
+					} while (false);
+					$pos = $54;
+					do {
+						if (!STRING$()) continue; // ~STRING
+						int $55 = $pos;
+						$56: do {
+							do {
+								if (!$string("i")) continue; // "i"
+								continue $56;
+							} while (false);
+							$pos = $55;
+						} while (false);
+						$pos = $54;
+						String imagei, f = "$string(";
+						int $57 = $lock(1); // = <
+						int $58 = $lock(1); // = <
+						STRING$(); // ~STRING
+						image = $image($58); // >
+						$59: do {
+							int $60 = $pos;
+							do {
+								if (!$string("i")) continue; // "i"
+								$pos = $60;
+								$pos += 1; // "i"
+								f = "$stringi(";
+								image = image.toLowerCase();
+								continue $59;
+							} while (false);
+							$pos = $60;
+						} while (false);
+						imagei = $image($57); // >
+						symbol.pred_not(f + image + ')', imagei);
+						continue $53;
+					} while (false);
+					$pos = $54;
+					do {
+						if (!CHAR$()) continue; // CHAR
+						$pos = $54;
 						image = CHAR(); // CHAR
 						symbol.pred_not(pred_char(image), image);
-						continue $39;
+						continue $53;
 					} while (false);
-					$pos = $40;
+					$pos = $54;
 					symbol.par();
 					$pos += 1; // "("
 					_par_(); // _par_
@@ -968,23 +1052,23 @@ public class Generator extends GeneratorHelper {
 				if (!_par_$()) continue; // _par_
 				if (!$string(")")) continue; // ")"
 				__$(); // ~__?
-				int $42 = $pos;
-				$43: do {
+				int $61 = $pos;
+				$62: do {
 					do {
 						if (!$string("?")) continue; // "?"
-						continue $43;
+						continue $62;
 					} while (false);
-					$pos = $42;
+					$pos = $61;
 					do {
 						if (!$string("*")) continue; // "*"
-						continue $43;
+						continue $62;
 					} while (false);
-					$pos = $42;
+					$pos = $61;
 					do {
 						if (!$string("+")) continue; // "+"
-						continue $43;
+						continue $62;
 					} while (false);
-					$pos = $42;
+					$pos = $61;
 				} while (false);
 				$pos = $0;
 				symbol.par();
@@ -992,32 +1076,32 @@ public class Generator extends GeneratorHelper {
 				_par_(); // _par_
 				$pos += 1; // ")"
 				__$(); // ~__?
-				$44: do {
-					int $45 = $pos;
+				$63: do {
+					int $64 = $pos;
 					do {
 						if (!$string("?")) continue; // "?"
-						$pos = $45;
+						$pos = $64;
 						$pos += 1; // "?"
 						symbol.par_option();
-						continue $44;
+						continue $63;
 					} while (false);
-					$pos = $45;
+					$pos = $64;
 					do {
 						if (!$string("*")) continue; // "*"
-						$pos = $45;
+						$pos = $64;
 						$pos += 1; // "*"
 						symbol.par_more();
-						continue $44;
+						continue $63;
 					} while (false);
-					$pos = $45;
+					$pos = $64;
 					do {
 						if (!$string("+")) continue; // "+"
-						$pos = $45;
+						$pos = $64;
 						$pos += 1; // "+"
 						symbol.par_plus();
-						continue $44;
+						continue $63;
 					} while (false);
-					$pos = $45;
+					$pos = $64;
 					symbol.par_end();
 				} while (false);
 				return;
@@ -1025,37 +1109,37 @@ public class Generator extends GeneratorHelper {
 			$pos = $0;
 			String code;
 			if (!$string(":")) throw new ParseError(); // ":"
-			$46: do {
-				int $47 = $pos;
+			$65: do {
+				int $66 = $pos;
 				do {
 					if (!$string(" ")) continue; // " "
-					$pos = $47;
+					$pos = $66;
 					$pos += 1; // " "
-					continue $46;
+					continue $65;
 				} while (false);
-				$pos = $47;
+				$pos = $66;
 				do {
 					if (!$string("\t")) continue; // "\t"
-					$pos = $47;
+					$pos = $66;
 					$pos += 1; // "\t"
-					continue $46;
+					continue $65;
 				} while (false);
-				$pos = $47;
+				$pos = $66;
 			} while (false);
-			int $48 = $lock(1); // = <
-			$49: for (;;) {
-				int $50 = $pos;
+			int $67 = $lock(1); // = <
+			$68: for (;;) {
+				int $69 = $pos;
 				do {
 					if ($string("\n")) continue; // !"\n"
 					if (!$any()) continue; // .
-					$pos = $50;
+					$pos = $69;
 					++$pos; // .
-					continue $49;
+					continue $68;
 				} while (false);
-				$pos = $50;
+				$pos = $69;
 				break;
 			}
-			code = $image($48); // >
+			code = $image($67); // >
 			symbol.code(code);
 		} catch (ParseError e) {
 			throw e;
@@ -1184,30 +1268,14 @@ public class Generator extends GeneratorHelper {
 				$pos = $0;
 				do {
 					if (!STRING$()) continue; // STRING
-					__$(); // ~__?
 					int $12 = $pos;
 					$13: do {
 						do {
-							if (!$string("?")) continue; // "?"
-							continue $13;
-						} while (false);
-						$pos = $12;
-						do {
-							if (!$string("*")) continue; // "*"
-							continue $13;
-						} while (false);
-						$pos = $12;
-						do {
-							if (!$string("+")) continue; // "+"
+							if (!$string("i")) continue; // "i"
 							continue $13;
 						} while (false);
 						$pos = $12;
 					} while (false);
-					continue $1;
-				} while (false);
-				$pos = $0;
-				do {
-					if (!CHAR$()) continue; // CHAR
 					__$(); // ~__?
 					int $14 = $pos;
 					$15: do {
@@ -1231,42 +1299,31 @@ public class Generator extends GeneratorHelper {
 				} while (false);
 				$pos = $0;
 				do {
-					if (!$string("&")) continue; // "&"
+					if (!CHAR$()) continue; // CHAR
 					__$(); // ~__?
 					int $16 = $pos;
 					$17: do {
 						do {
-							if (!ID$()) continue; // ID
+							if (!$string("?")) continue; // "?"
 							continue $17;
 						} while (false);
 						$pos = $16;
 						do {
-							if (!$string(".")) continue; // "."
+							if (!$string("*")) continue; // "*"
 							continue $17;
 						} while (false);
 						$pos = $16;
 						do {
-							if (!STRING$()) continue; // ~STRING
+							if (!$string("+")) continue; // "+"
 							continue $17;
 						} while (false);
 						$pos = $16;
-						do {
-							if (!CHAR$()) continue; // CHAR
-							continue $17;
-						} while (false);
-						$pos = $16;
-						$16 = 0;
 					} while (false);
-					if ($16 == 0) {
-						if (!$string("(")) continue; // "("
-						if (!_par_$()) continue; // _par_
-						if (!$string(")")) continue; // ")"
-					}
 					continue $1;
 				} while (false);
 				$pos = $0;
 				do {
-					if (!$string("!")) continue; // "!"
+					if (!$string("&")) continue; // "&"
 					__$(); // ~__?
 					int $18 = $pos;
 					$19: do {
@@ -1282,6 +1339,14 @@ public class Generator extends GeneratorHelper {
 						$pos = $18;
 						do {
 							if (!STRING$()) continue; // ~STRING
+							int $20 = $pos;
+							$21: do {
+								do {
+									if (!$string("i")) continue; // "i"
+									continue $21;
+								} while (false);
+								$pos = $20;
+							} while (false);
 							continue $19;
 						} while (false);
 						$pos = $18;
@@ -1301,27 +1366,70 @@ public class Generator extends GeneratorHelper {
 				} while (false);
 				$pos = $0;
 				do {
+					if (!$string("!")) continue; // "!"
+					__$(); // ~__?
+					int $22 = $pos;
+					$23: do {
+						do {
+							if (!ID$()) continue; // ID
+							continue $23;
+						} while (false);
+						$pos = $22;
+						do {
+							if (!$string(".")) continue; // "."
+							continue $23;
+						} while (false);
+						$pos = $22;
+						do {
+							if (!STRING$()) continue; // ~STRING
+							int $24 = $pos;
+							$25: do {
+								do {
+									if (!$string("i")) continue; // "i"
+									continue $25;
+								} while (false);
+								$pos = $24;
+							} while (false);
+							continue $23;
+						} while (false);
+						$pos = $22;
+						do {
+							if (!CHAR$()) continue; // CHAR
+							continue $23;
+						} while (false);
+						$pos = $22;
+						$22 = 0;
+					} while (false);
+					if ($22 == 0) {
+						if (!$string("(")) continue; // "("
+						if (!_par_$()) continue; // _par_
+						if (!$string(")")) continue; // ")"
+					}
+					continue $1;
+				} while (false);
+				$pos = $0;
+				do {
 					if (!$string("(")) continue; // "("
 					if (!_par_$()) continue; // _par_
 					if (!$string(")")) continue; // ")"
 					__$(); // ~__?
-					int $20 = $pos;
-					$21: do {
+					int $26 = $pos;
+					$27: do {
 						do {
 							if (!$string("?")) continue; // "?"
-							continue $21;
+							continue $27;
 						} while (false);
-						$pos = $20;
+						$pos = $26;
 						do {
 							if (!$string("*")) continue; // "*"
-							continue $21;
+							continue $27;
 						} while (false);
-						$pos = $20;
+						$pos = $26;
 						do {
 							if (!$string("+")) continue; // "+"
-							continue $21;
+							continue $27;
 						} while (false);
-						$pos = $20;
+						$pos = $26;
 					} while (false);
 					continue $1;
 				} while (false);
@@ -1330,27 +1438,27 @@ public class Generator extends GeneratorHelper {
 			} while (false);
 			if ($0 == 0) {
 				if (!$string(":")) continue; // ":"
-				int $22 = $pos;
-				$23: do {
+				int $28 = $pos;
+				$29: do {
 					do {
 						if (!$string(" ")) continue; // " "
-						continue $23;
+						continue $29;
 					} while (false);
-					$pos = $22;
+					$pos = $28;
 					do {
 						if (!$string("\t")) continue; // "\t"
-						continue $23;
+						continue $29;
 					} while (false);
-					$pos = $22;
+					$pos = $28;
 				} while (false);
-				$24: for (;;) {
-					int $25 = $pos;
+				$30: for (;;) {
+					int $31 = $pos;
 					do {
 						if ($string("\n")) continue; // !"\n"
 						if (!$any()) continue; // .
-						continue $24;
+						continue $30;
 					} while (false);
-					$pos = $25;
+					$pos = $31;
 					break;
 				}
 			}

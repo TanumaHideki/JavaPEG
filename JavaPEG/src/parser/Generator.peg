@@ -77,15 +77,21 @@ class = "Generator_NEW" "GeneratorHelper";
 	/ : symbol.pred("$any()", "++$pos", ".");
 	)
 /
-: String image;
+: String image, imagei, f = "$string(";
 : int length;
-	image = < length = STRING > ~--?
-	( "?" : symbol.pred_option("$string(" + image + ')', image);
-	/ "*" : symbol.pred_more("$string(" + image + ')', image);
+	imagei = <
+		image = < length = STRING >
+		( "i"
+			: f = "$stringi(";
+			: image = image.toLowerCase();
+		)?
+	> ~--?
+	( "?" : symbol.pred_option(f + image + ')', imagei);
+	/ "*" : symbol.pred_more(f + image + ')', imagei);
 	/ "+"
-		: symbol.pred("$string(" + image + ')', "$pos += " + length, image);
-		: symbol.pred_more("$string(" + image + ')', image);
-	/ : symbol.pred("$string(" + image + ')', "$pos += " + length, image);
+		: symbol.pred(f + image + ')', "$pos += " + length, imagei);
+		: symbol.pred_more(f + image + ')', imagei);
+	/ : symbol.pred(f + image + ')', "$pos += " + length, imagei);
 	)
 /
 : String image;
@@ -102,7 +108,14 @@ class = "Generator_NEW" "GeneratorHelper";
 	"&" ~--?
 	( image = ID : symbol.pred_and(image + "$()", image);
 	/ "." : symbol.pred_and("$any()", ".");
-	/ image = < ~STRING > : symbol.pred_and("$string(" + image + ')', image);
+	/ : String imagei, f = "$string(";
+		imagei = <
+			image = < ~STRING >
+			( "i"
+				: f = "$stringi(";
+				: image = image.toLowerCase();
+			)?
+		> : symbol.pred_and(f + image + ')', imagei);
 	/ image = CHAR : symbol.pred_and(pred_char(image), image);
 	/ : symbol.par();
 		"(" -par- ")" : symbol.par_and();
@@ -112,7 +125,14 @@ class = "Generator_NEW" "GeneratorHelper";
 	"!" ~--?
 	( image = ID : symbol.pred_not(image + "$()", image);
 	/ "." : symbol.pred_not("$any()", ".");
-	/ image = < ~STRING > : symbol.pred_not("$string(" + image + ')', image);
+	/ : String imagei, f = "$string(";
+		imagei = <
+			image = < ~STRING >
+			( "i"
+				: f = "$stringi(";
+				: image = image.toLowerCase();
+			)?
+		> : symbol.pred_not(f + image + ')', imagei);
 	/ image = CHAR : symbol.pred_not(pred_char(image), image);
 	/ : symbol.par();
 		"(" -par- ")" : symbol.par_not();

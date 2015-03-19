@@ -233,6 +233,18 @@ public abstract class Parser {
 		return true;
 	}
 
+	protected boolean $stringi(String string) {
+		int l = string.length();
+		if (!ensure($pos + l)) {
+			return false;
+		}
+		for (int i = 0; i < l; ++i) {
+			if (Character.toLowerCase(buf[($pos + i) & mask]) != string.charAt(i)) return false;
+		}
+		$pos += l;
+		return true;
+	}
+
 	protected boolean $char(Pattern pattern) {
 		if (!ensure($pos + 1) || !pattern.matcher(String.valueOf(buf[$pos & mask])).matches()) return false;
 		++$pos;
