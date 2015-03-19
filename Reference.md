@@ -1,13 +1,14 @@
 # JavaPEG Reference
 
 ## Grammar elements
-_notes:_  
-Symbol name can include hyphens (`-`) which are replaced by underlines (`_`) in the output code.  
-Symbol name starts with dollar (`$`) means it's start symbol and never called in the grammar. This specification is to reduce the output code and the cache memory for packrat parsing.
+_note1:_ Symbol name can include hyphens (`-`) which are replaced by underlines (`_`) in the output code.  
+_note2:_ Symbol name starts with dollar (`$`) means it's start symbol and never called in the grammar. This specification is to reduce the output code and the cache memory for packrat parsing.
  * Terminal elements
   * __"_string_"__ - basic string  
   _e.g._ __`"if" expression "then" statement`__
-  * __[_pattern_]__ - character pattern  
+  * __"_string_"i__ - basic string (case insensitive)  
+  _e.g._ __`"SELECT"i columns "FROM"i table ( "WHERE"i condition )?`__
+  * __[_pattern_]__ - character pattern, same as character class regular expression in Java  
   _e.g._ __`[A-Za-z_] [0-9A-Za-z_]*`__
   * __.__ (dot) - any character, not EOF  
   _e.g._ __`"//" ( !"\n" . )*`__
@@ -22,18 +23,20 @@ Symbol name starts with dollar (`$`) means it's start symbol and never called in
   * __( _elements_ / _elements_ ... )__ - ordered choice
  * Postfix modifiers
   * ___element_ ?__ - optional
-  * __( _group_ )?__ - optional for group
+  * __( _elements_ / _elements_ ... )?__ - optional for group
   * ___element_ \*__ - zero or more
-  * __( _group_ )\*__ - zero or more for group
+  * __( _elements_ / _elements_ ... )\*__ - zero or more for group
   * ___element_ +__ - one or more
-  * __( _group_ )+__ - one or more for group
+  * __( _elements_ / _elements_ ... )+__ - one or more for group
  * Prefix modifiers
   * __& _element___ - and predicate
-  * __& ( _group_ )__ - and predicate for group
+  * __& ( _elements_ / _elements_ ... )__ - and predicate for group
   * __! _element___ - not predicate
-  * __! ( _group_ )__ - not predicate for group
+  * __! ( _elements_ / _elements_ ... )__ - not predicate for group  
+  _note:_ __`!( a / b / c )`__ is same as __`!a !b !c`__ and maybe the latter is better.
  * Action elements
-  * ___image_ = < _elements_ >__ - retrieve image string
+  * ___image_ = < _elements_ >__ - retrieve image string  
+  _note:_ __`image = < a / b >`__ occurs error, __`image = < ( a / b ) >`__ is right.
   * __: *java_code*__ - embedded action code
  * Comment
   * __// *comment*__ - comment
@@ -70,8 +73,7 @@ Symbol name starts with dollar (`$`) means it's start symbol and never called in
   * '__`//`__' _ALineOfComment_
 
 ## Header commands
-_note:_  
-Actually the header commands are implemented as methods named '$'+_command_ and invoked by Java reflection.
+_note:_ Actually the header commands are implemented as methods named '$'+_command_ and invoked by Java reflection.
 So, extended generator may implement new header commands likewise.
  * __out__ = "*output_file_name*" ;
   * Redirect result output to a file.
