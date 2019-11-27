@@ -6,7 +6,7 @@ PEG scannerless parser generator for Java 8
 * Outputs pure Java scannerless parser with cache functionality.
 * Enables hybrid grammar description by parser class inheritance.
 * [Eclipse plugin](https://github.com/TanumaHideki/JavaPEG/blob/master/JavaPEG/JavaPEGPlugin.zip) to coloring grammar is available.
-* Grammar reference is available [__here__](https://github.com/TanumaHideki/JavaPEG/blob/master/Reference.md).
+* [__Grammar reference is available here__](https://github.com/TanumaHideki/JavaPEG/blob/master/Reference.md).
 
 ### Requirements:
 * Parser generator requires Java 8 to execute.
