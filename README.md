@@ -2,7 +2,7 @@
 PEG scannerless parser generator for Java 8
 
 ### What's this?
-* A Java parser generator like [JavaCC](https://javacc.java.net/) based on [Parsing Expression Grammar](http://en.wikipedia.org/wiki/Parsing_expression_grammar).
+* A Java parser generator like [JavaCC](https://javacc.org/) based on [Parsing Expression Grammar](http://en.wikipedia.org/wiki/Parsing_expression_grammar).
 * Outputs pure Java scannerless parser with cache functionality.
 * Enables hybrid grammar description by parser class inheritance.
 * [Eclipse plugin](https://github.com/TanumaHideki/JavaPEG/blob/master/JavaPEG/JavaPEGPlugin.zip) to coloring grammar is available.
